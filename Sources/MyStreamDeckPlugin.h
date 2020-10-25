@@ -66,6 +66,7 @@ class MyStreamDeckPlugin : public ESDBasePlugin {
     std::string appSecret;
     std::string oauthToken;
     std::string refreshToken;
+    std::string setValue;
 
     bool isValid() const;
     bool operator==(const Credentials& other) const;

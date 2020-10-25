@@ -24,6 +24,7 @@ LICENSE file.
 
 namespace {
 const auto MUTE_ACTION_ID = "com.fredemmott.discord.mute";
+const auto MUTE_ACTION_SET_ID = "com.fredemmott.discord.muteset";
 const auto DEAFEN_ACTION_ID = "com.fredemmott.discord.deafen";
 
 const auto RECONNECT_PI_ACTION_ID = "com.fredemmott.discord.rpc.reconnect";
@@ -59,6 +60,9 @@ void MyStreamDeckPlugin::UpdateState(bool isMuted, bool isDeafened) {
         mConnectionManager->SetState((isMuted || isDeafened) ? 1 : 0, context);
         continue;
       }
+      if (action == MUTE_ACTION_SET_ID) {
+        mConnectionManager->SetState(atoi(mCredentials.setValue.c_str()), context);
+      }
       if (action == DEAFEN_ACTION_ID) {
         mConnectionManager->SetState(isDeafened ? 1 : 0, context);
         continue;
@@ -86,6 +90,10 @@ void MyStreamDeckPlugin::KeyUpForAction(
   const auto oldState = EPLJSONUtils::GetIntByName(inPayload, "state");
   if (inAction == MUTE_ACTION_ID) {
     mClient->setIsMuted(oldState == 0);
+    return;
+  }
+  if (inAction == MUTE_ACTION_SET_ID) {
+    mClient->setIsMuted(atoi(mCredentials.setValue.c_str()));
     return;
   }
   if (inAction == DEAFEN_ACTION_ID) {
@@ -270,6 +278,8 @@ void MyStreamDeckPlugin::ConnectToDiscord() {
       const auto action = pair.second;
       if (action == MUTE_ACTION_ID) {
         mConnectionManager->SetState(isMuted ? 1 : 0, ctx);
+      } else if (action == MUTE_ACTION_SET_ID) {
+        mConnectionManager->SetState(atoi(mCredentials.setValue.c_str()), ctx);
       } else if (action == DEAFEN_ACTION_ID) {
         mConnectionManager->SetState(state.isDeafened ? 1 : 0, ctx);
       }
@@ -284,6 +294,7 @@ void MyStreamDeckPlugin::ConnectToDiscord() {
     mCredentials.appSecret = mClient->getAppSecret();
     mCredentials.oauthToken = credentials.accessToken;
     mCredentials.refreshToken = credentials.refreshToken;
+    mCredentials.setValue = credentials.setValue;
     std::stringstream logMessage;
     logMessage << "Got new credentials for app id" << mCredentials.appId
                << " - with oauth token = "

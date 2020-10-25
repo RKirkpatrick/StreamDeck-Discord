@@ -13,7 +13,24 @@
       "SupportedInMultiActions": false,
 	    "Name": "Toggle Discord Mute",
       "Tooltip": "Toggle Self-Mute in Discord",
-      "UUID": "com.fredemmott.discord.mute"
+      "UUID": "com.fredemmott.discord.mute",
+      "PropertyInspectorPath": "propertyinspector/index.html"
+    },
+    {
+      "Icon": "discord-mic-on",
+      "States": [
+        {
+          "Image": "discord-mic-on"
+        },
+        {
+          "Image": "discord-mic-off"
+        }
+      ],
+      "SupportedInMultiActions": true,
+      "Name": "Set Discord Mute",
+      "Tooltip": "Set Self-Mute in Discord",
+      "UUID": "com.fredemmott.discord.muteset",
+      "PropertyInspectorPath": "propertyinspector/set.html"
     },
 	{
       "Icon": "discord-deafen-off", 
@@ -28,14 +45,14 @@
       "SupportedInMultiActions": false,
 	    "Name": "Toggle Discord Deafen",
       "Tooltip": "Toggle Self-Mute in Deafen",
-      "UUID": "com.fredemmott.discord.deafen"
+      "UUID": "com.fredemmott.discord.deafen",
+      "PropertyInspectorPath": "propertyinspector/index.html"
     }
   ], 
   "Author": "Fred Emmott", 
   "CodePathMac": "sddiscord",
   "CodePathWin": "sddiscord.exe",
-  "PropertyInspectorPath": "propertyinspector/index.html",
-  "Description": "Toggle Discord Mute and Deafen.",
+  "Description": "Toggle and Set Discord Mute and Deafen.",
   "Name": "Discord Mute/Deafen", 
   "Icon": "discord-mic-off", 
   "Version": "${CMAKE_PROJECT_VERSION}",

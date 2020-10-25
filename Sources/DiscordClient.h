@@ -30,6 +30,7 @@ class DiscordClient {
   struct Credentials {
     std::string accessToken;
     std::string refreshToken;
+    std::string setValue;
   };
   typedef std::function<void(const Credentials&)> CredentialsCallback;
 
